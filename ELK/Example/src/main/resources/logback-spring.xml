@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+	<springProperty scope="context" name="log-module"
+		source="spring.application.name" defaultValue="elk" />
+	<springProperty scope="context" name="logstash-host"
+		source="logging.tcp.host" defaultValue="localhost" />
+	<springProperty scope="context" name="logstash-port"
+		source="logging.tcp.port" defaultValue="12345" />
+	<springProperty scope="context" name="isEnableTCP"
+		source="logging.tcp.enable" defaultValue="false" />
+	
+	<appender name="TCP"
+		class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<remoteHost>${logstash-host}</remoteHost>
+		<port>${logstash-port}</port>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+	</appender>
+
+
+	<root level="INFO">
+		<appender-ref ref="TCP" />
+	</root>
+</Configuration>
